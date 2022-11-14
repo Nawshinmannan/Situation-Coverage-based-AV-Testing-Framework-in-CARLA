@@ -77,9 +77,10 @@ The full steps of getting this framework to run are mentioned below. These instr
 
      **pip install --user pygame numpy**
      
-- **Test Carla installation** by going to the examples folder in Python API folder inside Carla (using the cd command in the terminal). My examples folder is at the following address in my PC, "D:\Carla9.10\WindowsNoEditor\PythonAPI\examples". Run the spawn_npc.py python script while CarlaUE4.exe is running using this command:
+- **Test Carla installation** by going to the examples folder in Python API folder inside Carla (using the cd command in the terminal). My examples folder is at the following address in my PC, "C:\Carla9.10\WindowsNoEditor\PythonAPI\examples". Run the spawn_npc.py python script while CarlaUE4.exe is running using this command:
 
      **python spawn_npc.py**
+     If you get "directX Runtime error" while running CarlaUE4.exe, then download Carla9.4 and run CarlaEU4.exe and get the option to fix this error and install EU4 prerequisites and install EU4 prerequisites and delete everything from Carla 9.4. Then finally run carlaEU4.exe from Carla 9.10. Always Check virtual environment, python 3.7 or check inside Carla folder and version of python. 
 
 ## 3) Install Scenario Runner 9.10 (This exact version)
 --------------------------------------------------------------------------
@@ -90,15 +91,27 @@ The full steps of getting this framework to run are mentioned below. These instr
 
      **pip3 install --user -r requirements.txt**
      
+     If you get "error: subprocess-exited-with-error" in this section, then it's better to install all the packages separately and use pip install Shapely to avoid this error.
+     
 - Then set the environment variables as shown in the **scenario runner** docs link provided above.
-The environment variables will take the paths of the Carla installation and Scenario Runner installation.
+The environment variables will take the paths of the Carla installation and Scenario Runner installation. to set pythonpath,make sure that you are in scenario runner folder and set the path as follow :
+set CARLA_ROOT=C:\Users\nmp522\Desktop\CARLA_0.9.10\WindowsNoEditor
+set SCENARIO_RUNNER_ROOT=C:\Users\nmp522\Desktop\scenario_runner-0.9.10
+set PYTHONPATH=%PYTHONPATH%;C:\Users\nmp522\Desktop\CARLA_0.9.10
+set PYTHONPATH=%PYTHONPATH%;C:\Users\nmp522\Desktop\CARLA_0.9.10\WindowsNoEditor\PythonAPI
+set PYTHONPATH=%PYTHONPATH%;C:\Users\nmp522\Desktop\CARLA_0.9.10\WindowsNoEditor\PythonAPI\carla
+set PYTHONPATH=%PYTHONPATH%;C:\Users\nmp522\Desktop\CARLA_0.9.10\WindowsNoEditor\PythonAPI\carla\dist\carla-0.9.10-py3.7-win-amd64.egg
+set PYTHONPATH=%PYTHONPATH%;C:\Users\nmp522\Desktop\CARLA_0.9.10\WindowsNoEditor\PythonAPI\carla\agents
+set PYTHONPATH=%PYTHONPATH%;C:\Users\nmp522\Desktop\scenario_runner-0.9.10
      
      
 - To check the **Scenario Runner** installation, run the **CarlaUE4.exe** (**in Carla folder**) and run the following two python scripts in order in the **Scenario Runner folder** using these commands:
 		
-     **python scenario_runner.py --scenario NoSignalJunctionCrossing --reloadWorld**
+     **python scenario_runner.py --scenario NoSignalJunctionCrossing --reloadWorld --output**
 		
-     **python manual_control.py**
+     **python manual_control.py --autopilot**
+     
+     You need to run this two commands in two separate terminal at the same time with the "set python path" inside scenario runner folder of the created virtual environment.
      
 - **Make sure your Carla 9.10 installation and Scenario Runner 9.10 are working properly before moving to the next steps.**
 
@@ -141,14 +154,24 @@ The environment variables will take the paths of the Carla installation and Scen
 
 - **pip install cython**
 
-- **pip install git+https://github.com/philferriere/cocoapi.git#subdirectory=PythonAPI**
+- **pip install git+https://github.com/philferriere/cocoapi.git#subdirectory=PythonAPI** (For this, in your pc, microsoft visual C++ studio build tool should be installed first)
 
 - **pip install tf_slim**
 
-- Use following command to set the environment variables path to Models and Object detection Models inside the scenario runner! (considering you have scenario_runner-0.9.10 folder at this location in D: \ )
+- Use following command to set the environment variables path to Models and Object detection Models inside the scenario runner! (considering you have scenario_runner-0.9.10 folder at this location in C: \ ). You need to set path for carla as well like before otherwise "Module Not found error : import carla" will pop up.
 
-	**set PYTHONPATH=D:\scenario_runner-0.9.10\models;D:\scenario_runner-0.9.10\models\research;D:\scenario_runner-0.9.10\models\research\slim**
-
+set CARLA_ROOT=C:\Users\nmp522\Desktop\CARLA_0.9.10\WindowsNoEditor
+set SCENARIO_RUNNER_ROOT=C:\Users\nmp522\Desktop\scenario_runner-0.9.10
+set PYTHONPATH=%PYTHONPATH%;C:\Users\nmp522\Desktop\CARLA_0.9.10
+set PYTHONPATH=%PYTHONPATH%;C:\Users\nmp522\Desktop\CARLA_0.9.10\WindowsNoEditor\PythonAPI
+set PYTHONPATH=%PYTHONPATH%;C:\Users\nmp522\Desktop\CARLA_0.9.10\WindowsNoEditor\PythonAPI\carla
+set PYTHONPATH=%PYTHONPATH%;C:\Users\nmp522\Desktop\CARLA_0.9.10\WindowsNoEditor\PythonAPI\carla\dist\carla-0.9.10-py3.7-win-amd64.egg
+set PYTHONPATH=%PYTHONPATH%;C:\Users\nmp522\Desktop\CARLA_0.9.10\WindowsNoEditor\PythonAPI\carla\agents
+set PYTHONPATH=%PYTHONPATH%;C:\Users\nmp522\Desktop\scenario_runner-0.9.10
+set PYTHONPATH=%PYTHONPATH%;C:\Users\nmp522\Desktop\scenario_runner-0.9.10\models
+set PYTHONPATH=%PYTHONPATH%;C:\Users\nmp522\Desktop\scenario_runner-0.9.10\models\research
+set PYTHONPATH=%PYTHONPATH%;C:\Users\nmp522\Desktop\scenario_runner-0.9.10\models\research\slim
+	
 ## 5) Running the Situation Coverage-based AV-Testing Framework
 
 - Run the following command inside the "scenario_runner-0.9.10" folder to run the SitCov AV-Testing Framework automatic testsuite generation:
